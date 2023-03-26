@@ -1,10 +1,9 @@
 import { createFormContext } from '@mantine/form';
 
 export type TaskProps =  {
-  title: string;
-  scripts: string;
-  articleType: string;
+  topic: string;
   loading: boolean;
+  winner: string;
 }
 
 export const [TaskFormProvider, useTaskFormContext, useTaskForm] = createFormContext<TaskProps>();

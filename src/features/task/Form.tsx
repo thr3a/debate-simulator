@@ -1,38 +1,31 @@
-import { Group, Button, Textarea, Title, CopyButton, Radio } from '@mantine/core';
+import { Group, Button, Textarea, Title, CopyButton, Radio, TextInput, Paper, Text } from '@mantine/core';
 import { TaskFormProvider, useTaskForm } from '@/features/task/FormContext';
 import { isNotEmpty } from '@mantine/form';
 import { assistantPrompt } from '@/features/task/Util';
 import { useEventListener } from '@mantine/hooks';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 export const TaskForm = (props: { csrfToken: string}) => {
   const [output, setOutput] = useState('');
   const form = useTaskForm({
     initialValues: {
-      title: '',
-      articleType: 'diary',
       loading: false,
-      scripts: '',
+      topic: '唐揚げにレモンをかけるべきか否か',
+      winner: ''
     },
     validate: {
-      // title: isNotEmpty('タイトルは必須項目です'),
-      scripts: isNotEmpty('箇条書きは必須項目です')
+      topic: isNotEmpty('お題は必須項目です')
     },
   });
 
-  const resetFromValue = () => {
-    form.reset();
-  };
-  const ref = useEventListener('click', resetFromValue);
-
   const handleSubmit = async () => {
-    setOutput('');
-    form.setValues({ loading: true });
+    const members: string[] = ['A', 'B'];
+    const winner = members[Math.floor(Math.random() * members.length)];
+    console.log(winner);
+    setOutput('Aさん「');
+    form.setValues({ winner: winner, loading: true });
 
-    const systemPrompt = `
-As a blogger, Convert the bullet point script into a ${form.values.articleType} written in fluent Japanese without omitting the original information.
-出力は話し言葉で一人称は「俺」でマークダウン形式
-    `;
+    const systemPrompt = 'Simulate a competitive debate and please output only the dialogue during the process.';
     const response = await fetch('/api/chat/', {
       method: 'POST',
       headers: {
@@ -67,50 +60,29 @@ As a blogger, Convert the bullet point script into a ${form.values.articleType} 
   return (
     <TaskFormProvider form={form}>
       <form onSubmit={form.onSubmit(() => handleSubmit())}>
-        <Radio.Group
-          label="記事タイプ"
+        <TextInput
+          label='バトルしてほしいお題'
           withAsterisk
-          {...form.getInputProps('articleType')}
-        >
-          <Group mt="xs">
-            <Radio value="diary" label="日記" />
-            <Radio value="tech article" label="技術ブログ" />
-            <Radio value="blog article" label="解説記事" />
-          </Group>
-        </Radio.Group>
-
-        <Textarea
-          label='文章にしたい箇条書き'
-          withAsterisk
-          {...form.getInputProps('scripts')}
-          minRows={12}
-          autosize
-        ></Textarea>
-
-        <Group position='right' mt="sm">
-          <Button color="red" ref={ref}>リセット</Button>
-        </Group>
+          {...form.getInputProps('topic')}
+        ></TextInput>
 
         <Group position="center">
-          <Button type="submit" loaderPosition="center" loading={form.values.loading}>作成!</Button>
-        </Group>
-        <Group mt="sm" mb="sm">
-          <Title order={2}>生成記事</Title>
-          <CopyButton value={output}>
-            {({ copied, copy }) => (
-              <Button color={copied ? 'teal' : 'gray'} onClick={copy} size="xs">
-                {copied ? 'コピーしました！' : 'クリップボードにコピー'}
-              </Button>
-            )}
-          </CopyButton>
+          <Button type="submit" loaderPosition="center" color="orange" loading={form.values.loading}>議論開始!</Button>
         </Group>
 
-        <Textarea
-          value={output}
-          minRows={10}
-          autosize
-        ></Textarea>
+        { output !== '' && (
+          <Textarea
+            value={output}
+            minRows={2}
+            autosize
+            mt="sm"
+          ></Textarea>
+        )}
 
+
+        { !form.values.loading && form.values.winner !== '' && (
+          <Title order={2}>結果: <Text span c="red">{form.values.winner}さんの勝ち！</Text></Title>
+        )}
       </form>
     </TaskFormProvider>
   );

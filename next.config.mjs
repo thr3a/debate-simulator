@@ -8,7 +8,7 @@ const nextConfig = {
     unoptimized: true
   },
   poweredByHeader: false,
-  // output: 'standalone'
+  output: 'standalone'
 };
 
 export default nextConfig;

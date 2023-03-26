@@ -1,9 +1,8 @@
-import { Group, Button, Textarea, Title, CopyButton, Radio, TextInput, Paper, Text } from '@mantine/core';
+import { Group, Button, Textarea, Title, TextInput, Text } from '@mantine/core';
 import { TaskFormProvider, useTaskForm } from '@/features/task/FormContext';
 import { isNotEmpty } from '@mantine/form';
 import { assistantPrompt } from '@/features/task/Util';
-import { useEventListener } from '@mantine/hooks';
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 
 export const TaskForm = (props: { csrfToken: string}) => {
   const [output, setOutput] = useState('');

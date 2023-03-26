@@ -11,7 +11,7 @@ export default function App(props: AppProps) {
   return (
     <>
       <Head>
-        <title>マックで近くに座っていた女子高生が話していたんだけど</title>
+        <title>AIディスカッション</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no" />
         <meta name="description" content="バトルしてほしいお題を入れるとJK二人が勝手に議論します。" />
         <link rel="icon" href="/favicon.ico" />

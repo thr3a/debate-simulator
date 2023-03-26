@@ -75,6 +75,7 @@ export const TaskForm = (props: { csrfToken: string}) => {
             value={output}
             minRows={2}
             autosize
+            size='xs'
             mt="sm"
           ></Textarea>
         )}

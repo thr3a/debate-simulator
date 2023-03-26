@@ -69,7 +69,7 @@ jobs:
           git config --global user.email thr3a@example.com
           git clone https://${{secrets.MANIFEST_TOKEN}}@github.com/thr3a/kubernetes-manifests /tmp/app
           cd /tmp/app
-          yq '.spec.template.spec.containers[0].image = "${{ env.IMAGE_NAME }}"' argo/auto-namer-sensei/deployment.yaml -i
+          yq '.spec.template.spec.containers[0].image = "${{ env.IMAGE_NAME }}"' argo/debate-simulator/deployment.yaml -i
           git add .
           git commit -m "update: ${{ env.IMAGE_NAME }}"
           git push

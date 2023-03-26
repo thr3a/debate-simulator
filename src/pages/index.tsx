@@ -1,15 +1,21 @@
-import type { NextPage } from 'next';
-import { Anchor } from '@mantine/core';
+import type { NextPage, GetServerSideProps } from 'next';
+import { TaskForm } from '@/features/task/Form';
+import { Text } from '@mantine/core';
 
-const IndexPage: NextPage = () => {
+type Props = {
+  csrfToken: string;
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const csrfToken = res.getHeader('X-CSRF-Token') || 'missing';
+  return { props: { csrfToken } };
+};
+
+const IndexPage: NextPage<Props> = ({ csrfToken }) => {
   return (
     <>
-      <p>
-        <Anchor href="/page2">page2</Anchor>
-      </p>
-      <p>
-        <Anchor href="/fetch">fetch</Anchor>
-      </p>
+      <Text fz="sm" mb="md">箇条書きから文章を生成します。</Text>
+      <TaskForm csrfToken={csrfToken}></TaskForm>
     </>
   );
 };

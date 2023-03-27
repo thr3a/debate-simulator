@@ -1,24 +1,24 @@
 import { TaskProps } from '@/features/task/FormContext';
 
-export const assistantPrompt = (value: TaskProps): string => {
-  if (value.winner === 'A') {
+export const assistantPrompt = (value: TaskProps, winner: string): string => {
+  if (winner === 'A') {
     return `
 Topic: ${value.topic}
 Character:
-A: A high school girl.
-B: A high school girl whose logical thinking ability is inferior to A.
-Result: A and B were arguing and A won the argument.
-Dialogue (up to 12):
+A: 20 year old woman.
+B: 16 year old girl.
+Winner: A. A refuted B's claim by presenting detailed data.
+Dialogue:
 Aさん「
       `.trim();
   } else {
     return `
 Topic: ${value.topic}
 Character:
-A: A high school girl whose logical thinking ability is inferior to B.
-B: A high school girl.
-Winner: A and B were arguing and B won the argument.
-Dialogue (up to 12):
+A: 20 year old woman.
+B: 16 year old girl.
+Winner: B. B refuted A's claim by presenting detailed data.
+Dialogue:
 Aさん「
       `.trim();
   }

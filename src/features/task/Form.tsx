@@ -20,11 +20,10 @@ export const TaskForm = (props: { csrfToken: string}) => {
   const handleSubmit = async () => {
     const members: string[] = ['A', 'B'];
     const winner = members[Math.floor(Math.random() * members.length)];
-    console.log(winner);
     setOutput('Aさん「');
     form.setValues({ winner: winner, loading: true });
 
-    const systemPrompt = 'Simulate a competitive debate and please output only the dialogue during the process.';
+    const systemPrompt = 'Simulate a competitive debate and please output only the 12 dialogue during the process.';
     const response = await fetch('/api/chat/', {
       method: 'POST',
       headers: {
@@ -32,7 +31,7 @@ export const TaskForm = (props: { csrfToken: string}) => {
       },
       body: JSON.stringify({
         system_message: systemPrompt,
-        human_message: assistantPrompt(form.values),
+        human_message: assistantPrompt(form.values, winner),
         csrf_token: props.csrfToken,
       }),
     });

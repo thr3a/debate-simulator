@@ -3,4 +3,5 @@
 // export const FIREBASE_PROJECT_ID = process.env['NEXT_PUBLIC_FIREBASE_PROJECT_ID'] ?? '';
 // export const FIREBASE_MESSAGING_SENDER_ID = process.env['NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'] ?? '';
 
-export const HOGEHOGE_VARIABLES = 'hogehoge';
+export const TITLE = 'AI議論コロシアム';
+export const DESCRIPTION = 'バトルしてほしいお題を入れるとAさんとBさんが勝手に議論します。どっちが勝つか予想しよう!';
